@@ -1,0 +1,27 @@
+{
+    "manifest_version": 2,
+    "name": "Gmail Tracker Chrome Extension",
+    "short_name": "gmailtracker",
+    "version": "1.0",
+    "author": "",
+
+    "description": "",
+
+    "content_scripts": [
+        {
+            "matches": [ "*://mail.google.com/*" ],
+            "js": [
+                "src/extensionInjector.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+
+    "web_accessible_resources": [
+        "dist/extension.js"
+    ],
+
+    "permissions": [
+        "https://*/*"
+    ]
+}
