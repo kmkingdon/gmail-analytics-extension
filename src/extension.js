@@ -12,9 +12,12 @@ gmail.observe.on("load", () => {
     console.log("Hello, " + userEmail + ". This is your extension talking!");
 });
 
-//Identify the subject and date of the new composed email
+//Identify the to, subject, and date of the new composed email
 
+let to = '';
 let subject = '';
+
+//reformat date without any spaces and in American standard format
 let today = new Date();
 let dd = today.getDate();
 let mm = today.getMonth() + 1; //January is 0!
@@ -27,22 +30,40 @@ if (mm < 10) {
 }
 let dateSent = mm + '/' + dd + '/' + yyyy;
 
-
+//add event listeners to new message
 gmail.observe.on("compose", () => {
-    const subject = document.getElementsByName('subjectbox')[0]
-    subject.addEventListener("change", findSubject);
+    const toBox = document.getElementsByName('to')[0];
+    toBox.addEventListener("change", findTo);
 
-    
-    
+    const subjectBox = document.getElementsByName('subjectbox')[0];
+    subjectBox.addEventListener("change", findSubject);
+
+    const messageBox = document.querySelector('.Am');
+    messageBox.addEventListener('keypress', addPixel);
 })
 
+//find who the email is to
+function findTo(event) {
+    to = event.target.value;
+    console.log(event.target.childNodes)
+}
+
+//find the subject title
 function findSubject(event) {
     subject= event.target.value;
+}
+
+//add the pixel to message
+function addPixel() {
     const pixel = document.createElement('img');
-    pixel.src = `http://www.google-analytics.com/collect?v=1&tid=UA-117489240-1&cid=CLIENT_ID_NUMBER&t=event&ec=email&ea=open&el=${subject}${dateSent}&cs=newsletter&cm=email&cn=Campaign_Name`;
-    
-    const message = document.querySelector('.editable');
-    message.appendChild(pixel);
+    pixel.id = 'tracker'
+    pixel.src = `http://www.google-analytics.com/collect?v=1&tid=UA-117489240-1&cid=${to}&t=event&ec=email&ea=open&el=${subject}${dateSent}&cs=newsletter&cm=email&cn=Campaign_Name`;
+
+    const message = document.querySelector('.Am');
+   
+    if(!message.innerHTML.includes("www.google-analytics")) {
+        message.appendChild(pixel);
+    }
 }
 
 
