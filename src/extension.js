@@ -12,14 +12,18 @@ gmail.observe.on("load", () => {
     console.log("Hello, " + userEmail + ". This is your extension talking!");
 });
 
-//Identify the subject of the new composed email
+//Identify the subject and date of the new composed email
+
+let subject = '';
+let dateSent = new Date();
+
 gmail.observe.on("compose", () => {
-    const subject = document.getElementsByName('subjectbox')[0].onchange=findSubject;
+    const subject = document.getElementsByName('subjectbox')[0]
+    subject.addEventListener("change", findSubject);
 })
 
 function findSubject(event) {
-    console.log('changing')
-    console.log(event.target.value)
+    subject= event.target.value;
 }
 
 
