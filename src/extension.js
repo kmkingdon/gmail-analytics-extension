@@ -15,7 +15,18 @@ gmail.observe.on("load", () => {
 //Identify the subject and date of the new composed email
 
 let subject = '';
-let dateSent = new Date();
+let today = new Date();
+let dd = today.getDate();
+let mm = today.getMonth() + 1; //January is 0!
+let yyyy = today.getFullYear();
+if (dd < 10) {
+    dd = '0' + dd;
+}
+if (mm < 10) {
+    mm = '0' + mm;
+}
+let dateSent = mm + '/' + dd + '/' + yyyy;
+
 
 gmail.observe.on("compose", () => {
     const subject = document.getElementsByName('subjectbox')[0]
@@ -24,6 +35,9 @@ gmail.observe.on("compose", () => {
 
 function findSubject(event) {
     subject= event.target.value;
+    const pixel = document.createElement('img');
+    pixel.src = `http://www.google-analytics.com/collect?v=1&tid=UA-117489240-1&cid=CLIENT_ID_NUMBER&t=event&ec=email&ea=open&el=${subject}${dateSent}&cs=newsletter&cm=email&cn=Campaign_Name`;
+    console.log(pixel)
 }
 
 
