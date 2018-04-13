@@ -31,13 +31,18 @@ let dateSent = mm + '/' + dd + '/' + yyyy;
 gmail.observe.on("compose", () => {
     const subject = document.getElementsByName('subjectbox')[0]
     subject.addEventListener("change", findSubject);
+
+    
+    
 })
 
 function findSubject(event) {
     subject= event.target.value;
     const pixel = document.createElement('img');
     pixel.src = `http://www.google-analytics.com/collect?v=1&tid=UA-117489240-1&cid=CLIENT_ID_NUMBER&t=event&ec=email&ea=open&el=${subject}${dateSent}&cs=newsletter&cm=email&cn=Campaign_Name`;
-    console.log(pixel)
+    
+    const message = document.querySelector('.editable');
+    message.appendChild(pixel);
 }
 
 
