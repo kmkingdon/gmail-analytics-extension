@@ -30,10 +30,15 @@ if (mm < 10) {
 }
 let dateSent = mm + '/' + dd + '/' + yyyy;
 
-//add event listeners to subject line
+//add event listeners to subject line and creates "Track Links" button in compose menu
 gmail.observe.on("compose", () => {
     const subjectBox = document.getElementsByName('subjectbox')[0];
     subjectBox.addEventListener("change", findSubject);
+
+    let compose_ref = gmail.dom.composes()[0];
+    gmail.tools.add_compose_button(compose_ref, 'Track Links', function () {
+        proxyLinks();
+    }, 'Custom Style Classes');
 })
 
 //find the subject title
@@ -77,7 +82,6 @@ function saveRecipients(res) {
 gmail.observe.before('send_message', ()=> {
     addPixel();
     clearPixelData();
-    proxyLinks();
 });
 
 //add the pixel to message
@@ -100,8 +104,9 @@ function clearPixelData() {
     subject = '';
 }
 
-//proxy links before sending email
-function proxyLinks() {
+//proxies links when select "Track Links" button
+function proxyLinks(event) {
+   
     const message = document.querySelector('.Am');
     let messageString= message.innerHTML;
     
@@ -111,5 +116,7 @@ function proxyLinks() {
     
     message.innerHTML = newStringHTTP;
 };
+
+
 
 
