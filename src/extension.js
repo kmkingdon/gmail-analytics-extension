@@ -37,8 +37,12 @@ gmail.observe.on("compose", () => {
 
     let compose_ref = gmail.dom.composes()[0];
     gmail.tools.add_compose_button(compose_ref, 'Track Links', function () {
-        proxyLinks();
-    }, 'Custom Style Classes');
+        if(confirm("Would you like to create proxies for the links in this email?")) {
+            proxyLinks()
+        } 
+    }, 'track-links');
+    let trackLinksButton = document.querySelector('.track-links');
+    trackLinksButton.style.border = 'solid black 1px';
 })
 
 //find the subject title
