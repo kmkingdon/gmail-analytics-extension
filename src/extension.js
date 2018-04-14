@@ -14,7 +14,7 @@ gmail.observe.on("load", () => {
 
 //Identify the to, subject, and date of the new composed email
 
-let to = '';
+let to = [];
 let subject = '';
 
 //reformat date without any spaces and in American standard format
@@ -30,14 +30,16 @@ if (mm < 10) {
 }
 let dateSent = mm + '/' + dd + '/' + yyyy;
 
-//add event listeners to new message
+//add event listeners to subject line
 gmail.observe.on("compose", () => {
     const subjectBox = document.getElementsByName('subjectbox')[0];
     subjectBox.addEventListener("change", findSubject);
-
-    const messageBox = document.querySelector('.Am');
-    messageBox.addEventListener('keypress', addPixel);
 })
+
+//find the subject title
+function findSubject(event) {
+    subject = event.target.value;
+}
 
 //observe changes in recipient and posts email to database to return email id 
 gmail.observe.on("recipient_change", (match, recipients) => {
@@ -54,27 +56,60 @@ gmail.observe.on("recipient_change", (match, recipients) => {
             body: JSON.stringify(emailObject),
         })
             .then(res => res.json())
-            .then(res => console.log(res));
+            .then(res => saveRecipients(res));
     })
 })
 
-//find the subject title
-function findSubject(event) {
-    subject= event.target.value;
+//create an array of unique ids associated with recipient emails
+function saveRecipients(res) {
+   let recipientId = res.email.id
+   if(to.length !== 0) {
+        if(to.filter(id => id == recipientId).length === 0){
+            to.push(recipientId)
+        }
+   } else {
+       to.push(recipientId)
+   }
 }
+
+
+//add pixel before email is sent
+gmail.observe.before('send_message', ()=> {
+    addPixel();
+    clearPixelData();
+    proxyLinks();
+});
 
 //add the pixel to message
 function addPixel() {
     const pixel = document.createElement('img');
     pixel.id = 'tracker'
-    pixel.src = `http://www.google-analytics.com/collect?v=1&tid=UA-117489240-1&cid=CLIENT_ID&t=event&ec=email&ea=open&el=${subject}${dateSent}&cs=newsletter&cm=email&cn=Campaign_Name`;
+    pixel.src = `http://www.google-analytics.com/collect?v=1&tid=UA-117489240-1&cid=CLIENT_ID&t=event&ec=email&ea=open&el=${subject}_on_${dateSent}_to_${to}&cs=newsletter&cm=email&cn=Campaign_Name`;
 
     const message = document.querySelector('.Am');
-   
+
     //prevent multiple pixels being added
     if(!message.innerHTML.includes("www.google-analytics")) {
         message.appendChild(pixel);
     }
 }
+
+//clears pixel data after sending an email
+function clearPixelData() {
+    to = [];
+    subject = '';
+}
+
+//proxy links before sending email
+function proxyLinks() {
+    const message = document.querySelector('.Am');
+    let messageString= message.innerHTML;
+    
+    let newStringHTTPS = messageString.split('href="https://').join('href="https://proxy.playposit.com/ssl/');
+    let newStringWWW = newStringHTTPS.split('href="http://www.').join('href="https://proxy.playposit.com/http/');
+    let newStringHTTP = newStringWWW.split('href="http://').join('href="https://proxy.playposit.com/ssl/');
+    
+    message.innerHTML = newStringHTTP;
+};
 
 
