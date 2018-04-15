@@ -8,4 +8,3 @@ function addScript(src) {
 }
 
 addScript("dist/extension.js");
-

@@ -59,7 +59,7 @@ gmail.observe.on("recipient_change", (match, recipients) => {
             email: emailString
         };
 
-        fetch('http://localhost:3000/emails', {
+        fetch('https://gmail-db.herokuapp.com/emails', {
             method: 'POST',
             headers: new Headers({ 'Content-Type': 'application/json'}),
             body: JSON.stringify(emailObject),
