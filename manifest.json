@@ -11,14 +11,14 @@
         {
             "matches": [ "*://mail.google.com/*" ],
             "js": [
-                "src/extensionInjector.js"
+                "src/extensionInjector.js" 
             ],
             "run_at": "document_end"
         }
     ],
 
     "browser_action": {
-        "default_popup": "/client/build/popup.html",
+        "default_popup": "popup.html",
         "default_icon": {
             "16": "images/icon16.png",
             "48": "images/icon48.png",
@@ -38,7 +38,7 @@
     ],
 
     "permissions": [
-        "https://*/*", "declarativeContent", "activeTab"
+        "https://*/*"
     ],
 
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
