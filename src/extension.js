@@ -85,7 +85,7 @@ function saveRecipients(res) {
 //add pixel before email is sent
 gmail.observe.before('send_message', ()=> {
     addPixel();
-    clearPixelData();
+    postEmailData();
 });
 
 //add the pixel to message
@@ -93,13 +93,32 @@ function addPixel() {
     const pixel = document.createElement('img');
     pixel.id = 'tracker'
     pixel.src = `http://www.google-analytics.com/collect?v=1&tid=UA-117489240-1&cid=CLIENT_ID&t=event&ec=email&ea=open&el=${subject}_on_${dateSent}_to_${to}&cs=newsletter&cm=email&cn=Campaign_Name`;
-
+    console.log(pixel)
     const message = document.querySelector('.Am');
 
     //prevent multiple pixels being added
     if(!message.innerHTML.includes("www.google-analytics")) {
         message.appendChild(pixel);
     }
+}
+
+//sends a copy of analytics data to server
+function postEmailData() {
+
+    const sentEmailObject = {
+        'emailSent': dateSent,
+        'subject': subject,
+        'recipients': { "recipients": to },
+        'eventLabel': `${subject}_on_${dateSent}_to_${to}`
+    }
+
+    fetch('https://gmail-db.herokuapp.com/sent', {
+        method: 'POST',
+        headers: new Headers({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify(sentEmailObject),
+    })
+        .then(res => res.json())
+        .then(clearPixelData());
 }
 
 //clears pixel data after sending an email
@@ -120,6 +139,7 @@ function proxyLinks(event) {
     
     message.innerHTML = newStringHTTP;
 };
+
 
 
 
