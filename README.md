@@ -38,6 +38,10 @@ Click Load Unpacked and select the gmail-analytics-extension directory
 * Create a new Property by entering a name and generic url
 * Click Get Tracking Id
 * Take Tacking Id (UA-XXXXXXXXX-X) and replace the tracking id on line 8  of the extension.js
+* Run the build function to update /dist directory
+```
+npm run build
+```
 
 
 ## Dashboard Integration
