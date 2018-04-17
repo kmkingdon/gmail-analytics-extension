@@ -60,12 +60,12 @@ The database tracks recipient emails due to Google Analytic's policy of not allo
 
 The database can also track sent email information. To include this feature, add the following function to the src/extension.js file. 
 
-First, all the function call in the send_message event listener.
+First, add the function call in the send_message event listener.
 ```
 //add pixel and send email data to server before email is sent
 gmail.observe.before('send_message', ()=> {
     addPixel();
-    postEmailData();
+    postEmailData(); 
 });
 ```
 
@@ -106,6 +106,6 @@ MIT License Copyright (c) 2018 Kevin Kingdon
 |<img src="https://user-images.githubusercontent.com/32685092/35702971-d0b4e966-0757-11e8-8098-c2819dff5e58.png" width="100"> | Kevin Kingdon                    |
 | ------------- | ------------- |
 | Website  | [kmkingdon.info](https://kmkingdon.info) |
-| LinkIn   | [/in/kevin-kingdon/](https://www.linkedin.com/in/kevin-kingdon/) |
+| LinkedIn   | [/in/kevin-kingdon/](https://www.linkedin.com/in/kevin-kingdon/) |
 
 
