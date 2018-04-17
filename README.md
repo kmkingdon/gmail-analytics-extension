@@ -45,16 +45,16 @@ npm run build
 
 ## Library Integration
 This chrome extension relies on the gmail.js library and the was built with the basic boilerplate model. 
-[Gmail.js](https://github.com/KartikTalwar/gmail.js/tree/master)
-[Node.js Boilerplate](https://github.com/josteink/gmailjs-node-boilerplate)
+* [Gmail.js](https://github.com/KartikTalwar/gmail.js/tree/master)
+* [Node.js Boilerplate](https://github.com/josteink/gmailjs-node-boilerplate)
 
 
 ## Dashboard Integration
 This chrome extension also has a Demo Dashboard that creates a easy to understand user interface that tracks sent emails and the google analytics data of how many people have opened the email. 
 
 ### Vue Dashboard 
-[Github](https://github.com/kmkingdon/gmail-analytics-extension-dashboard)
-[Deployed Link](https://analytics-dashboard-62e6d.firebaseapp.com/)
+* [Github](https://github.com/kmkingdon/gmail-analytics-extension-dashboard)
+* [Deployed Link](https://analytics-dashboard-62e6d.firebaseapp.com/)
 
 ![dashboard](https://user-images.githubusercontent.com/32685092/38891539-ea8f113e-4241-11e8-88f4-03b41c80cde2.gif)
 
