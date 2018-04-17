@@ -4,7 +4,8 @@ const jQuery = require("jquery");
 const $ = jQuery;
 const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
-const trackerId = ''
+//update your personal tracker Id here
+const trackerId = 'UA-117489240-1'
 window.gmail = gmail;
 
 
@@ -90,7 +91,6 @@ function saveRecipients(res) {
 //add pixel and send email data to server before email is sent
 gmail.observe.before('send_message', ()=> {
     addPixel();
-    postEmailData();
 });
 
 //add the pixel to message
@@ -104,25 +104,6 @@ function addPixel() {
     if(!message.innerHTML.includes("www.google-analytics")) {
         message.appendChild(pixel);
     }
-}
-
-//sends a copy of analytics data to server
-function postEmailData() {
-
-    const sentEmailObject = {
-        'emailSent': dateSent,
-        'subject': subject,
-        'recipients': { "recipients": to },
-        'eventLabel': `${subject}_on_${dateSent}_to_${to}`
-    }
-
-    fetch('https://gmail-db.herokuapp.com/sent', {
-        method: 'POST',
-        headers: new Headers({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify(sentEmailObject),
-    })
-        .then(res => res.json())
-        .then(clearPixelData());
 }
 
 //clears pixel data after sending an email
