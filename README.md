@@ -1,4 +1,4 @@
-# gmail-analytics-extension
+# Gmail Analytics Chrome Extension
 Welcome to the Gmail Analytics chrome extension. 
 
 ## Features
