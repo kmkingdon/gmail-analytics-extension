@@ -90,6 +90,10 @@ function postEmailData() {
         .then(clearPixelData());
 }
 ```
+Finally, run the build function to update /dist directory
+```
+npm run build
+```
 
 * Note- this is just a demo feature and does not include full authorization/security
 
