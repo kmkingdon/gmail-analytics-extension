@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <style>
-        body {
-            box-sizing: border-box;
-            height: 600px;
-            width: 800px;
-            overflow: hidden;
-            margin: 0px;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="./main.css">
     <title>Gmail Analytics</title>
 </head>
 <body>
-    <iframe src="http://localhost:8081/" scrolling="no"></iframe>
+    <header>
+        <img src="./images/icon128.png" alt="icon">
+        <h1>Gmail Analytics</h1>
+    </header>
+    <main>
+        <h2>Setup Your Google Analytics:</h2>
+        <ol>
+            <li>Go to <a href="https://www.google.com/analytics/#?modal_active=none">Google Analytics</a> and sign in.</li>
+            <li>Click the Admin button in the lower left screen.</li>
+            <li>Create a Property by entering a name and a generic url.</li>
+            <li>Click Get Tracking Id</li>
+            <li>Add TrackingId to /dist/extension.js line 13402</li>
+        </ol>
+    </main>
+    <script src="./popup.js"></script>
 </body>
 </html>

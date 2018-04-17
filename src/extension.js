@@ -4,7 +4,9 @@ const jQuery = require("jquery");
 const $ = jQuery;
 const GmailFactory = require("gmail-js");
 const gmail = new GmailFactory.Gmail($);
+const trackerId = ''
 window.gmail = gmail;
+
 
 //Built in observe method from the boilerplate- used to check if extension is running 
 gmail.observe.on("load", () => {
@@ -43,6 +45,10 @@ gmail.observe.on("compose", () => {
     }, 'track-links');
     let trackLinksButton = document.querySelector('.track-links');
     trackLinksButton.style.border = 'solid black 1px';
+
+    chrome.storage.sync.get(['id'], function (result) {
+        console.log('Value currently is ' + result.id);
+    });
 })
 
 //find the subject title
@@ -81,8 +87,7 @@ function saveRecipients(res) {
    }
 }
 
-
-//add pixel before email is sent
+//add pixel and send email data to server before email is sent
 gmail.observe.before('send_message', ()=> {
     addPixel();
     postEmailData();
@@ -92,8 +97,7 @@ gmail.observe.before('send_message', ()=> {
 function addPixel() {
     const pixel = document.createElement('img');
     pixel.id = 'tracker'
-    pixel.src = `http://www.google-analytics.com/collect?v=1&tid=UA-117489240-1&cid=CLIENT_ID&t=event&ec=email&ea=open&el=${subject}_on_${dateSent}_to_${to}&cs=newsletter&cm=email&cn=Campaign_Name`;
-    console.log(pixel)
+    pixel.src = `https://www.google-analytics.com/collect?v=1&tid=${trackerId}&cid=CLIENT_ID&t=event&ec=email&ea=open&el=${subject}_on_${dateSent}_to_${to}&cs=newsletter&cm=email&cn=Campaign_Name`;
     const message = document.querySelector('.Am');
 
     //prevent multiple pixels being added
@@ -139,6 +143,7 @@ function proxyLinks(event) {
     
     message.innerHTML = newStringHTTP;
 };
+
 
 
 

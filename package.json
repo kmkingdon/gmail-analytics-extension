@@ -1,7 +1,7 @@
 {
-  "name": "gmailjs-node-boilerplate",
+  "name": "GmailAnalytics",
   "version": "1.0.0",
-  "description": "",
+  "description": "Basic Chrome Extension using Google Analytics to track email openings",
   "main": "",
   "scripts": {
     "deps": "npm install",
@@ -9,8 +9,8 @@
     "bundle": "browserify -o dist/extension.js src/extension.js",
     "build": "npm run stage && npm run bundle"
   },
-  "author": "Jostein kjønigsen",
-  "license": "ISC",
+  "author": "Kevin Kingdon",
+  "license": "MIT",
   "dependencies": {
     "gmail-js": "^0.6.13",
     "jquery": "^3.3.1"
