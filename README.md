@@ -25,9 +25,9 @@ npm install
 npm run build
 ```
 
-Go to [Chrome Extensions Dashboard](chrome://extensions/)
-Turn on Developer Mode
-Click Load Unpacked and select the gmail-analytics-extension directory
+* Go to [Chrome Extensions Dashboard](chrome://extensions/)
+* Turn on Developer Mode
+* Click Load Unpacked and select the gmail-analytics-extension directory
 
 * If you get errors, you may need to remove the key files from the node_module/public-encrypt directory
 
